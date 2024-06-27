@@ -13,19 +13,22 @@ const ProductList = () => {
   };
 
   useEffect(() => {
-    axiosInstance
-      .get("/products")
-      .then((res) => setProductList(res.data.products))
-      .catch((err) => console.log(err));
-    // console.log(productList);
+    const id = setTimeout(() => {
+      axiosInstance
+        .get("/products")
+        .then((res) => setProductList(res.data.products))
+        .catch((err) => console.log(err));
 
-    setIsPending(false);
+      setIsPending(false);
+    }, 1000);
   }, []);
+  console.log(productList);
 
   return (
     <>
-      {ispending && <p>Products Are Loading!!</p>}
-      {productList && (
+      {ispending ? (
+        <p className="lead text-start mx-5 mt-4">Products Are Loading!!</p>
+      ) : (
         <div className="text-start mx-5 mt-4">
           <small style={{ maxWidth: "25%" }}>
             Welcome to our shopping website , start browsing{" "}
@@ -33,7 +36,11 @@ const ProductList = () => {
           <hr className="text-center" style={{ maxWidth: "20%" }} />
         </div>
       )}
-      <div className="row row-cols-1 row-cols-md-3 g-4 mt-0 p-5">
+
+      <div
+        style={{ height: "100vh", maxWidth: "100%" }}
+        className="row row-cols-1 row-cols-md-3 g-4 mt-0 p-5"
+      >
         {productList.map((product) => (
           <div className="col-md-4" key={product.id}>
             <ProductCard
