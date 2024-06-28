@@ -4,8 +4,12 @@ import { axiosInstance } from "../Api/Api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfStroke } from "@fortawesome/free-solid-svg-icons";
 import { Button, ButtonGroup } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { deccreaseCounter, increaseCounter } from "../store/Slices/counter";
 
 const ProductDetails = () => {
+  const counter = useSelector((state) => state.counter.currentt_val);
+  const dispatch = useDispatch();
   const params = useParams();
   const [productDetails, setProductDetails] = useState({});
   const [arr, setArr] = useState([]);
@@ -26,7 +30,7 @@ const ProductDetails = () => {
   return (
     <div className="product-details">
       <div
-        style={{ height: "100vh" , maxWidth: "100%" }}
+        style={{ height: "100vh", maxWidth: "100%" }}
         className="row row-cols-1 row-cols-md-3 g-4  p-5 align-items-start justify-content-center"
       >
         <div className="col-md-5">
@@ -89,19 +93,22 @@ const ProductDetails = () => {
                   </button>
                 )}
               </div>
-
-              <div className="category mt-3">
+              <p className="mt-3 text-muted">More Info - Related Categories</p>
+              <div className="category mt-3 d-flex align-items-center">
                 <Button className="me-3 mb-2" variant="outline-warning">
                   {productDetails.tags}
                 </Button>
-                <Button variant="outline-warning">{productDetails.tags}</Button>
+                <Button className="me-3 mb-2" variant="outline-warning">
+                  {productDetails.tags}
+                </Button>
               </div>
             </div>
             <hr />
             <div className="forth">
-              <ButtonGroup className="me-3" aria-label="Second group">
-                <Button>+</Button> <Button style={{ cursor: "none" }}>1</Button>{" "}
-                <Button>-</Button>
+              <ButtonGroup className="me-3 " aria-label="Second group">
+                <Button onClick={()=>dispatch(deccreaseCounter())} >-</Button>
+                <Button style={{ cursor: "none" }}>{counter}</Button>{" "}
+                <Button onClick={()=>{dispatch(increaseCounter())}}>+</Button>{" "}
               </ButtonGroup>
               <p className="lead" style={{ display: "inline-block" }}>
                 There are only{" "}
@@ -112,10 +119,22 @@ const ProductDetails = () => {
             <hr />
             <div className="d-flex justify-content-start row">
               <div className="col text-center mb-2">
-                <Button style={{width:"100%"}} className="rounded-5" variant="dark">Buy Now!</Button>
+                <Button
+                  style={{ width: "100%" }}
+                  className="rounded-5"
+                  variant="dark"
+                >
+                  Buy Now!
+                </Button>
               </div>
               <div className="col text-center">
-                <Button style={{width:"100%"}} className="rounded-5" variant="outline-dark">Add to Chart</Button>
+                <Button
+                  style={{ width: "100%" }}
+                  className="rounded-5"
+                  variant="outline-dark"
+                >
+                  Add to Chart
+                </Button>
               </div>
             </div>
           </div>
