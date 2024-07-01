@@ -1,13 +1,16 @@
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext } from "react";
 import { Badge } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import {  useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
+import { LanguageContext } from "../../context/Language";
 
 function Header() {
+  const {contextLang} = useContext(LanguageContext);
   const counter = useSelector((state)=> state.counter.currentt_val)
   
   return (
@@ -52,6 +55,18 @@ function Header() {
                 login
               </NavLink>
             </Link>
+            
+            <Link className="nav-link" to="/language">
+              <NavLink
+                to="/language"
+                style={{ textDecoration: "none" }}
+                className={({ isActive, isPending }) =>
+                  isPending ? "" : isActive ? "text-success" : "text-black"
+                }
+              >
+                Language : {contextLang}
+              </NavLink>
+            </Link>
 
             <Link className="nav-link" to="/chart">
               <NavLink
@@ -64,7 +79,7 @@ function Header() {
                 <div >
                   <FontAwesomeIcon icon={faCartShopping} />
                   <Badge style={{position:"absolute" , top : "5px"}} className="ms-1" bg="secondary">
-                    {counter}
+                    {counter?? 0}
                   </Badge>
                 </div>
               </NavLink>

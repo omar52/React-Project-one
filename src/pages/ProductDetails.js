@@ -5,27 +5,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfStroke } from "@fortawesome/free-solid-svg-icons";
 import { Button, ButtonGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { deccreaseCounter, increaseCounter } from "../store/Slices/counter";
+import { addProduct, removeProduct } from "../store/Slices/counter";
 
 const ProductDetails = () => {
-  const counter = useSelector((state) => state.counter.currentt_val);
+  const cart = useSelector((state) => state.counter.cart);
   const dispatch = useDispatch();
   const params = useParams();
   const [productDetails, setProductDetails] = useState({});
-  const [arr, setArr] = useState([]);
-  console.log(arr);
-  // console.log(params);
+
   useEffect(() => {
     axiosInstance
       .get(`/products/${params.id}`)
       .then((res) => setProductDetails(res.data))
       .catch((err) => console.log(err));
-    console.log(productDetails);
-    //   setArr(productDetails.images);
-    //   console.log(arr.length);
-  }, []);
-  console.log(productDetails);
-  console.log(productDetails.tags);
+  }, [params.id]);
 
   return (
     <div className="product-details">
@@ -95,20 +88,33 @@ const ProductDetails = () => {
               </div>
               <p className="mt-3 text-muted">More Info - Related Categories</p>
               <div className="category mt-3 d-flex align-items-center">
-                <Button className="me-3 mb-2" variant="outline-warning">
-                  {productDetails.tags}
-                </Button>
-                <Button className="me-3 mb-2" variant="outline-warning">
-                  {productDetails.tags}
-                </Button>
+                {productDetails.tags?.map((tag, index) => (
+                  <Button
+                    key={index}
+                    className="me-3 mb-2"
+                    variant="outline-warning"
+                  >
+                    {tag}
+                  </Button>
+                ))}
               </div>
             </div>
             <hr />
             <div className="forth">
               <ButtonGroup className="me-3 " aria-label="Second group">
-                <Button onClick={()=>dispatch(deccreaseCounter())} >-</Button>
-                <Button style={{ cursor: "none" }}>{counter}</Button>{" "}
-                <Button onClick={()=>{dispatch(increaseCounter())}}>+</Button>{" "}
+                <Button onClick={() => dispatch(removeProduct(productDetails))}>
+                  -
+                </Button>
+                <Button style={{ cursor: "none" }}>
+                  {cart[productDetails.id]?.count || 0}
+                </Button>{" "}
+                <Button
+                  onClick={() => {
+                    dispatch(addProduct(productDetails));
+                  }}
+                >
+                  +
+                </Button>{" "}
               </ButtonGroup>
               <p className="lead" style={{ display: "inline-block" }}>
                 There are only{" "}

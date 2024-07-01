@@ -13,7 +13,7 @@ const ProductList = () => {
   };
 
   useEffect(() => {
-    const id = setTimeout(() => {
+    setTimeout(() => {
       axiosInstance
         .get("/products")
         .then((res) => setProductList(res.data.products))
