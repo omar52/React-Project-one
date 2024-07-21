@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { LanguageContext } from "../context/Language";
 
 const Language = () => {
-    const {contextLang , setContextLang} = useContext(LanguageContext)
+    const { setContextLang} = useContext(LanguageContext)
     return ( 
         <div className="text-center mt-5">
             <h2>Application Language</h2>

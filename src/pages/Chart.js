@@ -48,7 +48,9 @@ const Chart = () => {
                   <Button style={{ cursor: "none" }}>{product.count}</Button>{" "}
                   <Button
                     disabled={product.count === product.stock}
-                    className={product.count === product.stock ? "btn-secondary" : ""}
+                    className={
+                      product.count === product.stock ? "btn-secondary" : ""
+                    }
                     onClick={() => {
                       dispatch(addProduct(product));
                     }}
@@ -79,11 +81,13 @@ const Chart = () => {
           <div className="col-md-2">-</div>
           <div className="col-md-2 border rounded-2">
             ${" "}
-            {Math.round(Object.values(cart).reduce(
-              (accum, currentProduct) =>
-                accum + currentProduct.price * currentProduct.count,
-              0
-            ))}
+            {Math.round(
+              Object.values(cart).reduce(
+                (accum, currentProduct) =>
+                  accum + currentProduct.price * currentProduct.count,
+                0
+              )
+            )}
           </div>
         </div>
       </div>

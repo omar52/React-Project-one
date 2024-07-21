@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { axiosInstance } from "../Api/Api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfStroke } from "@fortawesome/free-solid-svg-icons";
-import { Button, ButtonGroup } from "react-bootstrap";
+import { Badge, Button, ButtonGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct, removeProduct } from "../store/Slices/counter";
 
@@ -71,12 +71,12 @@ const ProductDetails = () => {
             <div className="third-section">
               <div>
                 {productDetails.stock > "0" ? (
-                  <button
+                  <Badge
                     type="button"
-                    className="mt-2 ms-3  btn btn-success rounded-5"
+                    className="mt-2 ms-3 py-2  bg-success rounded-5"
                   >
                     In Stock
-                  </button>
+                  </Badge>
                 ) : (
                   <button
                     type="button"
@@ -89,13 +89,13 @@ const ProductDetails = () => {
               <p className="mt-3 text-muted">More Info - Related Categories</p>
               <div className="category mt-3 d-flex align-items-center">
                 {productDetails.tags?.map((tag, index) => (
-                  <Button
+                  <Badge
                     key={index}
-                    className="me-3 mb-2"
-                    variant="outline-warning"
+                    className="me-3 mb-2 bg-white text-black border border-3 border-warning "
+                    
                   >
                     {tag}
-                  </Button>
+                  </Badge>
                 ))}
               </div>
             </div>
@@ -129,12 +129,14 @@ const ProductDetails = () => {
                   style={{ width: "100%" }}
                   className="rounded-5"
                   variant="dark"
+                  onClick={() => dispatch(addProduct(productDetails))}
                 >
                   Buy Now!
                 </Button>
               </div>
               <div className="col text-center">
                 <Button
+                  onClick={() => dispatch(addProduct(productDetails))}
                   style={{ width: "100%" }}
                   className="rounded-5"
                   variant="outline-dark"
